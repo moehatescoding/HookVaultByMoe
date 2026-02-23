@@ -32,24 +32,24 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <main className="relative pt-32 pb-20 overflow-hidden">
+      <main className="relative pt-24 md:pt-32 pb-20 overflow-hidden">
         {/* Background Gradients */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl opacity-20 pointer-events-none">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-purple-600 rounded-full blur-[128px]" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-600 rounded-full blur-[128px]" />
+          <div className="absolute top-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-purple-600 rounded-full blur-[80px] md:blur-[128px]" />
+          <div className="absolute bottom-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-blue-600 rounded-full blur-[80px] md:blur-[128px]" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm mb-8 animate-fade-in">
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-white/80">AI-Powered Content Strategy</span>
+        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs md:sm mb-8 animate-fade-in">
+            <Sparkles className="w-3.5 h-3.5 md:w-4 h-4 text-purple-400" />
+            <span className="text-white/80 uppercase tracking-widest font-bold">AI-Powered Content Strategy</span>
           </div>
 
-          <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tight md:tracking-tighter bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent leading-[1.1]">
             Generate Viral Hooks <br /> In <span className="text-purple-500">Seconds</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/60 mb-12 max-w-2xl mx-auto">
+          <p className="text-lg md:text-2xl text-white/60 mb-12 max-w-2xl mx-auto leading-relaxed px-4">
             Stop guessing. Start posting high-retention content powered by AI.
           </p>
 

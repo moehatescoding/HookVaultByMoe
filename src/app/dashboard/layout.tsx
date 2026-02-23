@@ -12,9 +12,26 @@ export default async function DashboardLayout({
     const history = await getHistory();
 
     return (
-        <div className="flex h-screen bg-[#0A0A0A] text-white">
-            {/* Sidebar */}
-            <aside className="w-80 border-r border-white/10 flex flex-col">
+        <div className="flex flex-col lg:flex-row h-screen bg-[#0A0A0A] text-white overflow-hidden">
+            {/* Mobile Header */}
+            <header className="lg:hidden flex items-center justify-between p-4 border-b border-white/10 bg-black/50 backdrop-blur-xl">
+                <Link href="/dashboard" className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                        <Zap className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="text-lg font-bold tracking-tight text-white">HookVault<span className="text-purple-500">ByMoe</span></span>
+                </Link>
+                <UserButton
+                    appearance={{
+                        elements: {
+                            userButtonAvatarBox: "w-8 h-8 rounded-lg"
+                        }
+                    }}
+                />
+            </header>
+
+            {/* Sidebar (Desktop) */}
+            <aside className="hidden lg:flex lg:w-80 border-r border-white/10 flex-col">
                 <div className="p-6">
                     <Link href="/dashboard" className="flex items-center gap-2 group">
                         <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -61,7 +78,7 @@ export default async function DashboardLayout({
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 overflow-hidden flex flex-col">
+            <main className="flex-1 overflow-y-auto lg:overflow-hidden flex flex-col">
                 {children}
             </main>
         </div>

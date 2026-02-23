@@ -41,40 +41,40 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
     }
 
     return (
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
             {/* LEFT SIDE: Input Form */}
-            <div className="w-1/2 p-10 overflow-y-auto border-r border-white/5">
+            <div className="w-full lg:w-1/2 p-6 md:p-10 overflow-y-auto border-b lg:border-b-0 lg:border-r border-white/5">
                 <div className="max-w-xl mx-auto">
-                    <div className="mb-10">
-                        <h1 className="text-3xl font-black mb-2 tracking-tight">Generate Hooks</h1>
-                        <p className="text-white/40">Enter your details and let AI craft the perfect viral hook.</p>
+                    <div className="mb-8 md:mb-10">
+                        <h1 className="text-2xl md:text-3xl font-black mb-2 tracking-tight">Generate Hooks</h1>
+                        <p className="text-sm md:text-base text-white/40">Enter your details and let AI craft the perfect viral hook.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Layers className="w-4 h-4" /> Niche
                                 </label>
                                 <input
                                     type="text"
                                     required
                                     placeholder="e.g. Finance, Fitness"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
                                     value={formData.niche}
                                     onChange={(e) => setFormData({ ...formData, niche: e.target.value })}
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Globe className="w-4 h-4" /> Topic
                                 </label>
                                 <input
                                     type="text"
                                     required
                                     placeholder="e.g. Best Stocks to Buy"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
                                     value={formData.topic}
                                     onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                                 />
@@ -82,26 +82,26 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                            <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                 <Users className="w-4 h-4" /> Target Audience
                             </label>
                             <input
                                 type="text"
                                 required
                                 placeholder="e.g. 20-30 year old investors"
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all"
                                 value={formData.audience}
                                 onChange={(e) => setFormData({ ...formData, audience: e.target.value })}
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Target className="w-4 h-4" /> Platform
                                 </label>
                                 <select
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
                                     value={formData.platform}
                                     onChange={(e) => setFormData({ ...formData, platform: e.target.value })}
                                 >
@@ -112,11 +112,11 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Palette className="w-4 h-4" /> Tone
                                 </label>
                                 <select
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
                                     value={formData.tone}
                                     onChange={(e) => setFormData({ ...formData, tone: e.target.value })}
                                 >
@@ -129,13 +129,13 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Sparkles className="w-4 h-4" /> Goal
                                 </label>
                                 <select
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
                                     value={formData.goal}
                                     onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
                                 >
@@ -147,11 +147,11 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-sm font-semibold text-white/60 flex items-center gap-2">
+                                <label className="text-xs md:text-sm font-semibold text-white/60 flex items-center gap-2">
                                     <Hash className="w-4 h-4" /> Number of Hooks
                                 </label>
                                 <select
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all appearance-none"
                                     value={formData.hookCount}
                                     onChange={(e) => setFormData({ ...formData, hookCount: e.target.value })}
                                 >
@@ -164,7 +164,7 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
 
                         <button
                             disabled={loading}
-                            className="w-full py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all mt-8"
+                            className="w-full py-4 bg-purple-600 hover:bg-purple-500 rounded-xl font-bold text-base md:text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all mt-4 md:mt-8"
                         >
                             {loading ? (
                                 <>
@@ -183,11 +183,11 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
             </div>
 
             {/* RIGHT SIDE: Generated Hooks */}
-            <div className="w-1/2 p-10 bg-white/5 overflow-y-auto">
+            <div className="w-full lg:w-1/2 p-6 md:p-10 bg-white/5 overflow-y-auto">
                 <div className="max-w-xl mx-auto h-full flex flex-col">
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-xl font-bold flex items-center gap-2 text-purple-400">
-                            <Sparkles className="w-5 h-5" />
+                    <div className="flex items-center justify-between mb-6 md:mb-8">
+                        <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 text-purple-400">
+                            <Sparkles className="w-4 h-4 md:w-5 h-5" />
                             AI Generated Output
                         </h2>
                         {generatedHooks && (
@@ -196,7 +196,7 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                                     navigator.clipboard.writeText(generatedHooks);
                                     alert("Copied to clipboard!");
                                 }}
-                                className="text-xs font-medium px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10"
+                                className="text-xs font-medium px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
                             >
                                 Copy All
                             </button>
@@ -204,12 +204,12 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                     </div>
 
                     {!generatedHooks && !loading && (
-                        <div className="flex-1 flex flex-col items-center justify-center text-center">
-                            <div className="w-16 h-16 rounded-3xl bg-white/5 flex items-center justify-center mb-6">
-                                <Zap className="w-8 h-8 text-white/20" />
+                        <div className="flex-1 flex flex-col items-center justify-center text-center py-10 md:py-0">
+                            <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-white/5 flex items-center justify-center mb-4 md:mb-6">
+                                <Zap className="w-6 h-6 md:w-8 h-8 text-white/20" />
                             </div>
-                            <h3 className="text-lg font-bold text-white/40 mb-2">No hooks yet</h3>
-                            <p className="text-white/20 text-sm max-w-xs">Fill out the form on the left to generate content.</p>
+                            <h3 className="text-base md:text-lg font-bold text-white/40 mb-2">No hooks yet</h3>
+                            <p className="text-white/20 text-xs md:text-sm max-w-xs px-6">Fill out the form on the left to generate content.</p>
                         </div>
                     )}
 
@@ -226,7 +226,7 @@ export default function DashboardContent({ initialHistory }: { initialHistory: a
                             <ReactMarkdown
                                 components={{
                                     ol: ({ node, ...props }) => <ol className="space-y-4 list-decimal pl-4" {...props} />,
-                                    li: ({ node, ...props }) => <li className="text-lg leading-relaxed text-white/80 pl-2 marker:text-purple-500 marker:font-bold" {...props} />
+                                    li: ({ node, ...props }) => <li className="text-base md:text-lg leading-relaxed text-white/80 pl-2 marker:text-purple-500 marker:font-bold" {...props} />
                                 }}
                             >
                                 {generatedHooks}
