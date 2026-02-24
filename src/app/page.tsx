@@ -1,6 +1,6 @@
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap, Smartphone, Target } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Quote, BookOpen } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -46,7 +46,7 @@ export default function LandingPage() {
           </div>
 
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tight md:tracking-tighter bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent leading-[1.1]">
-            Generate Viral Hooks <br /> In <span className="text-purple-500">Seconds</span>
+            Generate Viral Content <br /> In <span className="text-purple-500">Seconds</span>
           </h1>
 
           <p className="text-lg md:text-2xl text-white/60 mb-12 max-w-2xl mx-auto leading-relaxed px-4">
@@ -57,7 +57,7 @@ export default function LandingPage() {
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="group px-8 py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-lg transition-all hover:scale-105 flex items-center gap-2">
-                  Generate Hooks
+                  Start Generating
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </SignInButton>
@@ -68,38 +68,29 @@ export default function LandingPage() {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </SignedIn>
-            <button className="px-8 py-4 rounded-full bg-transparent border border-white/10 hover:bg-white/5 text-white font-medium transition-colors">
-              How it works
-            </button>
           </div>
 
-          {/* Feature Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 text-left">
-            {[
-              {
-                icon: <Smartphone className="w-6 h-6 text-blue-400" />,
-                title: "Short-Form Optimized",
-                desc: "Hooks designed specifically for TikTok, Reels, and Shorts algorithms."
-              },
-              {
-                icon: <Target className="w-6 h-6 text-purple-400" />,
-                title: "Retention Focused",
-                desc: "Psychologically engineered to stop the scroll and boost your watch time."
-              },
-              {
-                icon: <Zap className="w-6 h-6 text-amber-400" />,
-                title: "Instant Results",
-                desc: "Get 30+ viral hook variations in less than 5 seconds."
-              }
-            ].map((feature, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
-                <div className="mb-4 p-3 rounded-2xl bg-white/5 inline-block">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                <p className="text-white/60 leading-relaxed">{feature.desc}</p>
+          {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-32 text-left">
+            <div className="p-10 rounded-[2.5rem] bg-white/5 border border-white/10 hover:border-purple-500/50 transition-all group">
+              <div className="mb-6 p-4 rounded-2xl bg-purple-600/20 inline-block group-hover:scale-110 transition-transform">
+                <Quote className="w-8 h-8 text-purple-500" />
               </div>
-            ))}
+              <h3 className="text-3xl font-bold mb-4">Generate Hooks</h3>
+              <p className="text-white/60 text-lg leading-relaxed">
+                Scroll-stopping hooks optimized for retention. Captivate your audience in the first 3 seconds of your video.
+              </p>
+            </div>
+
+            <div className="p-10 rounded-[2.5rem] bg-white/5 border border-white/10 hover:border-blue-500/50 transition-all group">
+              <div className="mb-6 p-4 rounded-2xl bg-blue-600/20 inline-block group-hover:scale-110 transition-transform">
+                <BookOpen className="w-8 h-8 text-blue-500" />
+              </div>
+              <h3 className="text-3xl font-bold mb-4">Generate Viral Stories</h3>
+              <p className="text-white/60 text-lg leading-relaxed">
+                Short-form story frameworks engineered to go viral. Built with emotional triggers and high-retention pacing.
+              </p>
+            </div>
           </div>
         </div>
       </main>

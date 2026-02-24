@@ -1,11 +1,10 @@
 "use server";
 
 import { db } from "@/db";
-import { hookGenerations, categories, subCategories, scriptTypes, scriptGenerations } from "@/db/schema";
+import { hookGenerations, storyGenerations } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { revalidatePath } from "next/cache";
-import { eq, desc } from "drizzle-orm";
 
 const token = process.env.GITHUB_TOKEN;
 const model = process.env.AI_MODEL || "gpt-4o";
@@ -65,7 +64,7 @@ export async function generateHooks(formData: {
         platform,
         tone,
         goal,
-        hookCount,
+        hookCount: parseInt(hookCount),
         generatedHooks,
     });
 
@@ -74,103 +73,91 @@ export async function generateHooks(formData: {
     return { success: true, hooks: generatedHooks };
 }
 
-export async function getHistory() {
+export async function generateStories(formData: {
+    niche: string;
+    storyType: string;
+    audience: string;
+    platform: string;
+    tone: string;
+    goal: string;
+    length: string;
+}) {
     const { userId } = await auth();
 
     if (!userId) {
-        return [];
+        throw new Error("Unauthorized");
     }
 
-    return await db.query.hookGenerations.findMany({
-        where: (hooks, { eq }) => eq(hooks.userId, userId),
-        orderBy: (hooks, { desc }) => [desc(hooks.createdAt)],
-    });
-}
-
-// SCRIPTS ACTIONS
-export async function getScriptsMetadata() {
-    const allCategories = await db.query.categories.findMany();
-    const allSubCategories = await db.query.subCategories.findMany();
-    const allScriptTypes = await db.query.scriptTypes.findMany();
-
-    return {
-        categories: allCategories,
-        subCategories: allSubCategories,
-        scriptTypes: allScriptTypes
-    };
-}
-
-export async function generateScript(formData: {
-    categoryId: string;
-    subCategoryId: string;
-    scriptTypeId: string;
-    inputText?: string;
-}) {
-    const { userId } = await auth();
-    if (!userId) throw new Error("Unauthorized");
-
-    const category = await db.query.categories.findFirst({ where: eq(categories.id, formData.categoryId) });
-    const subCategory = await db.query.subCategories.findFirst({ where: eq(subCategories.id, formData.subCategoryId) });
-    const scriptType = await db.query.scriptTypes.findFirst({ where: eq(scriptTypes.id, formData.scriptTypeId) });
-
-    if (!category || !subCategory || !scriptType) throw new Error("Invalid selection");
-
-    const prompt = `
-        Category: ${category.name}
-        Sub-Category: ${subCategory.name}
-        Script Type: ${scriptType.name}
-        Context/Topic: ${formData.inputText || "General trending topics in this niche"}
-
-        Please generate a high-retention script following this structure:
-        1. Hook (1-2 scroll-stopping lines)
-        2. Script body (Engaging, platform-appropriate content)
-        3. CTA (1 clear call to action)
-
-        Keep it concise, high-retention, and optimized for the selected script type.
-    `;
+    const { niche, storyType, audience, platform, tone, goal, length } = formData;
 
     const response = await client.chat.completions.create({
         model: model,
         messages: [
             {
                 role: "system",
-                content: "You are a senior social media scriptwriter specializing in high-retention content. You write scripts that hook viewers instantly and lead to high engagement."
+                content: "You are a viral short-form storytelling expert. Generate platform-optimized short-form stories designed for high retention, emotional impact, and shareability."
             },
             {
                 role: "user",
-                content: prompt
+                content: `
+                    Niche: ${niche}
+                    Story Type: ${storyType}
+                    Audience: ${audience}
+                    Platform: ${platform}
+                    Tone: ${tone}
+                    Goal: ${goal}
+                    Length: ${length}
+
+                    Rules:
+                    - Start with a strong hook
+                    - Maintain fast pacing
+                    - Emotional triggers required
+                    - End with subtle CTA
+                    - Return clean formatted story only
+                `
             }
         ],
     });
 
-    const outputText = response.choices[0].message.content || "";
+    const generatedStories = response.choices[0].message.content || "";
 
-    // Save to DB
-    const [savedScript] = await db.insert(scriptGenerations).values({
+    // Save to Database
+    await db.insert(storyGenerations).values({
         userId,
-        categoryId: formData.categoryId,
-        subCategoryId: formData.subCategoryId,
-        scriptTypeId: formData.scriptTypeId,
-        inputText: formData.inputText,
-        outputText: outputText,
-    }).returning();
+        niche,
+        storyType,
+        audience,
+        platform,
+        tone,
+        goal,
+        length,
+        generatedStories,
+    });
 
-    revalidatePath("/dashboard/scripts");
+    revalidatePath("/dashboard");
 
-    return { success: true, script: savedScript };
+    return { success: true, stories: generatedStories };
 }
 
-export async function getScriptsHistory() {
+export async function getCombinedHistory() {
     const { userId } = await auth();
-    if (!userId) return [];
 
-    return await db.query.scriptGenerations.findMany({
-        where: (scripts, { eq }) => eq(scripts.userId, userId),
-        with: {
-            category: true,
-            subCategory: true,
-            scriptType: true
-        },
-        orderBy: (scripts, { desc }) => [desc(scripts.createdAt)],
+    if (!userId) {
+        return [];
+    }
+
+    const hooks = await db.query.hookGenerations.findMany({
+        where: (hooks, { eq }) => eq(hooks.userId, userId),
     });
+
+    const stories = await db.query.storyGenerations.findMany({
+        where: (stories, { eq }) => eq(stories.userId, userId),
+    });
+
+    const combined = [
+        ...hooks.map(h => ({ ...h, type: "hook" as const })),
+        ...stories.map(s => ({ ...s, type: "story" as const }))
+    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    return combined;
 }
