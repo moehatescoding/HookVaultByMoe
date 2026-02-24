@@ -1,8 +1,9 @@
 import { UserButton } from "@clerk/nextjs";
-import { Zap, History, LayoutDashboard, PlusCircle } from "lucide-react";
+import { Zap, History, LayoutDashboard, FileText, Clock } from "lucide-react";
 import Link from "next/link";
-import { getHistory } from "@/app/actions";
+import { getHistory, getScriptsHistory } from "@/app/actions";
 import SidebarHistory from "@/components/SidebarHistory";
+import ScriptsHistory from "@/components/ScriptsHistory";
 
 export default async function DashboardLayout({
     children,
@@ -10,17 +11,23 @@ export default async function DashboardLayout({
     children: React.ReactNode;
 }) {
     const history = await getHistory();
+    const scriptsHistory = await getScriptsHistory();
 
     return (
         <div className="flex flex-col lg:flex-row h-screen bg-[#0A0A0A] text-white overflow-hidden">
             {/* Mobile Header */}
             <header className="lg:hidden flex items-center justify-between p-4 border-b border-white/10 bg-black/50 backdrop-blur-xl">
-                <Link href="/dashboard" className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                        <Zap className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-lg font-bold tracking-tight text-white">HookVault<span className="text-purple-500">ByMoe</span></span>
-                </Link>
+                <div className="flex items-center gap-4">
+                    <Link href="/dashboard" className="flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                            <Zap className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-lg font-bold tracking-tight text-white">HookVault<span className="text-purple-500">ByMoe</span></span>
+                    </Link>
+                    <Link href="/dashboard/scripts" className="p-2 text-white/60 hover:text-purple-400 transition-colors">
+                        <FileText className="w-5 h-5" />
+                    </Link>
+                </div>
                 <UserButton
                     appearance={{
                         elements: {
@@ -42,22 +49,44 @@ export default async function DashboardLayout({
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2 overflow-y-auto custom-scrollbar">
-                    <Link
-                        href="/dashboard"
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl bg-purple-600/10 text-purple-400 border border-purple-500/20 hover:bg-purple-600/20 transition-all mb-8"
-                    >
-                        <PlusCircle className="w-5 h-5" />
-                        <span className="font-medium">New Generation</span>
-                    </Link>
-
-                    <div className="mb-4 px-4 border-b border-white/5 pb-2">
-                        <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] flex items-center gap-2">
-                            <History className="w-3 h-3" />
-                            History
-                        </h3>
+                    <div className="space-y-1 mb-8">
+                        <Link
+                            href="/dashboard"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-all"
+                        >
+                            <LayoutDashboard className="w-5 h-5" />
+                            <span className="font-medium">Hook Generator</span>
+                        </Link>
+                        <Link
+                            href="/dashboard/scripts"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 text-white/60 hover:text-white transition-all"
+                        >
+                            <FileText className="w-5 h-5" />
+                            <span className="font-medium">Script Generator</span>
+                        </Link>
                     </div>
 
-                    <SidebarHistory history={history} />
+                    <div className="space-y-8">
+                        <div className="space-y-4">
+                            <div className="px-4 border-b border-white/5 pb-2">
+                                <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <Clock className="w-3 h-3" />
+                                    Hooks History
+                                </h3>
+                            </div>
+                            <SidebarHistory history={history} />
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="px-4 border-b border-white/5 pb-2">
+                                <h3 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <FileText className="w-3 h-3" />
+                                    Scripts History
+                                </h3>
+                            </div>
+                            <ScriptsHistory history={scriptsHistory} />
+                        </div>
+                    </div>
                 </nav>
 
                 <div className="p-4 border-t border-white/10 bg-black/20 flex items-center justify-between">
